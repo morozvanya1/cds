@@ -1,10 +1,11 @@
 import "./App.css";
 
 function App() {
-  // var cors_api_url = "https://cors-anywhere.herokuapp.com/";
+  var cors_api_url = "https://cors-anywhere.herokuapp.com/";
+
   function doCORSRequest(options, printResult) {
     var x = new XMLHttpRequest();
-    // x.open(options.method, cors_api_url + options.url);
+    x.open(options.method, cors_api_url + options.url);
     x.open(options.method, options.url);
     x.onload = x.onerror = function () {
       printResult(x.responseText);
@@ -50,7 +51,7 @@ function App() {
           type="url"
           id="url"
           defaultValue="https://m.cdsvyatka.com/marsh_stops.php?marshlist=1001"
-          size={500}
+          size={502}
         />
       </label>
       <label>
