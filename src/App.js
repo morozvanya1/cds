@@ -6,24 +6,19 @@ function App() {
   const autoDesc = ["Авт 1", "Авт 2", "Авт 3", "Авт 5", "Авт 8", "Авт 9", "Авт 10", "Авт 11", "Авт 12", "Авт 14", "Авт 15", "Авт 16", "Авт 19", "Авт 20", "Авт 21", "Авт 22", "Авт 23", "Авт 26", "Авт 33", "Авт 38", "Авт 39", "Авт 44", "Авт 46", "Авт 47", "Авт 50", "Авт 51", "Авт 52", "Авт 53", "Авт 54", "Авт 61", "Авт 67", "Авт 70", "Авт 74", "Авт 84", "Авт 87", "Авт 90", "Авт К46", "Авт К53", "Авт 101", "Авт 104", "Авт 106", "Авт 107", "Авт 108", "Авт 109", "Авт 112", "Авт 115", "Авт 116", "Авт 117", "Авт 121", "Авт 125", "Авт 127", "Авт 129", "Авт 130", "Авт 133", "Авт 136", "Авт 138", "Авт 143", "Авт 146", "Авт 147", "Авт 148", "Авт 154", "Авт 155", "Авт 158", "Авт 160", "Авт 168", "Тролл Т1", "Тролл Т3", "Тролл Т4", "Тролл Т5", "Тролл Т7", "Тролл Т8"];
   const [marshRes, setMarshRes] = React.useState([]);
   const [optVal, setOptVal] = React.useState("");
+  var cors_api_url = "https://cors-anywhere.herokuapp.com/";
+  var mVal = 0, mHtml = "";
 
-  var mVal = 0;
-  var mHtml = "";
-
-  async function onSetMarsh() {
+  function onSetMarsh() {
     const select = document.getElementById("marshlist").getElementsByTagName("option");
-
     for (let i = 0; i < select.length; i++) {
       if (select[i].selected) {
-        mHtml = select[i].innerHTML;
-        mVal = select[i].value;
+        mHtml = select[i].innerHTML; mVal = select[i].value;
       }
     }
   }
 
-  var cors_api_url = "https://cors-anywhere.herokuapp.com/";
-
-  async function doCORSRequest(options, printResult) {
+  function doCORSRequest(options, printResult) {
     var x = new XMLHttpRequest();
     x.open(options.method, cors_api_url + options.url);
     // x.open(options.method, options.url);
@@ -31,21 +26,18 @@ function App() {
     x.send(options.data);
   }
 
-  async function getTransport(e) {
-    await onSetMarsh();
-
+  function getTransport(e) {
+    onSetMarsh();
     var urlField = "https://m.cdsvyatka.com/marsh_stops.php?marshlist=" + mVal;
     // var urlField = "http://localhost:8010/proxy/marsh_stops.php?marshlist=" + mVal;
-    // var urlField = "http://localhost:8010/proxy" + mVal;
     console.log(urlField);
     setOptVal("Остановки на маршруте - " + mHtml);
     e.preventDefault();
-    await doCORSRequest({ method: "GET", url: urlField },
+    doCORSRequest({ method: "GET", url: urlField },
       function printResult(result) {
         var from = result.search("busstop");
         var to = result.length;
         var newstr = result.substring(from, to);
-        // newstr = ["181 Ипподром", "601 ул. Космонавта Владислава Волкова", "181 Ипподром", "181 Ипподром", "181 Ипподром", "181 Ипподром", "181 Ипподром", "181 Ипподром", "181 Ипподром", "181 Ипподром", "181 Ипподром", "181 Ипподром", "181 Ипподром"]
         newstr = newstr.split('<div class="footer">')[0];
         newstr = newstr.split("</a><br><a href=prediction.php?");
         newstr = newstr.join();
@@ -55,6 +47,23 @@ function App() {
         newstr = newstr.split("busstop=")[1];
         newstr = newstr.replaceAll(">", " ");
         newstr = newstr.split(",");
+        setMarshRes(newstr);
+        console.log(marshRes);
+      }
+    );
+  }
+
+  function getInfo(e, val, desc) {
+    mVal = val;
+    var urlField = "https://m.cdsvyatka.com/prediction.php?busstop=" + mVal;
+    // var urlField = "http://localhost:8010/proxy/prediction.php?busstop=" + mVal;
+    console.log(urlField);
+    setOptVal("Остановка - " + desc);
+    e.preventDefault();
+    doCORSRequest({ method: "GET", url: urlField },
+      function printResult(result) {
+        var newstr = result;
+        newstr = [];
         setMarshRes(newstr);
         console.log(marshRes);
       }
@@ -83,7 +92,7 @@ function App() {
         <h3>{optVal}</h3>
         <ul>
         {marshRes.map((v,i) => (
-          <li key={i} value={v.slice(0, v.indexOf(' '))}>{v.slice(v.indexOf(' '), v.length)}</li>
+          <li key={i} value={v.slice(0, v.indexOf(' '))} onClick={(e) => getInfo(e, v.slice(0, v.indexOf(' ')), v.slice(v.indexOf(' '), v.length))}>{v.slice(v.indexOf(' '), v.length)}</li>
         ))}
         </ul>
       </div>
