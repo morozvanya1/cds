@@ -1,0 +1,81 @@
+/* background: rgb(26, 31, 37);
+border: 1px solid rgba(255, 255, 255, 0.1);
+background-color: #e6b333; */
+.App {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100vh;
+
+  background: rgb(26, 31, 37);
+  overflow-y: scroll;
+}
+
+.App header {
+  background: #e6b333;
+  color: white;
+
+  font-size: 14px;
+  text-align: center;
+
+  padding: 10px 0;
+}
+
+.App .content-header {
+  color: rgba(255, 255, 255, 0.75);
+  padding: 10px 10px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.App .content-header p {
+  font-size: 18px;
+  padding: 0 10px 0 0;
+}
+
+.App .content-header select {
+  padding: 5px 10px;
+}
+
+.App .content-header button {
+  padding: 5px 15px;
+  margin-left: 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background: #e6b333;
+
+  font-size: 16px;
+}
+
+.App .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 5px 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.App .content h3 {
+  color: white;
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.App .content li {
+  padding: 5px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 18px;
+  text-decoration: none;
+
+  list-style-type: none;
+
+  cursor: pointer;
+  border-bottom: #e6b333 1px solid ;
+}
+
+
