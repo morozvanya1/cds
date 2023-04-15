@@ -52,6 +52,7 @@ function App() {
         newstr = newstr.split(",");
         setMarshRes(newstr);
         setIt(true);
+        setIt2(false);
         console.log(marshRes);
       }
     );
