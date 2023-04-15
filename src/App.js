@@ -8,6 +8,9 @@ function App() {
   const [optVal, setOptVal] = React.useState("");
   var cors_api_url = "https://cors-anywhere.herokuapp.com/";
   var mVal = 0, mHtml = "";
+  const [it, setIt] = React.useState(false);
+  const [it2, setIt2] = React.useState(false);
+  const [urlVal, setUrlVal] = React.useState("");
 
   function onSetMarsh() {
     const select = document.getElementById("marshlist").getElementsByTagName("option");
@@ -48,24 +51,61 @@ function App() {
         newstr = newstr.replaceAll(">", " ");
         newstr = newstr.split(",");
         setMarshRes(newstr);
+        setIt(true);
+        setIt2(false);
         console.log(marshRes);
       }
     );
   }
 
-  function getInfo(e, val, desc) {
+  function getInfo(e, val, desc, url, descVal) {
     mVal = val;
     var urlField = "https://m.cdsvyatka.com/prediction.php?busstop=" + mVal;
-    // var urlField = "http://localhost:8010/proxy/prediction.php?busstop=" + mVal;
+    if (url !== undefined) {
+      urlField = url;
+    } else {
+      // urlField = "http://localhost:8010/proxy/prediction.php?busstop=" + mVal;
+      setUrlVal(urlField);
+    }
     console.log(urlField);
-    setOptVal("Остановка - " + desc);
+    if (descVal !== undefined) {
+      setOptVal(descVal);
+    } else {
+      setOptVal("Остановка: " + desc);
+    }
     e.preventDefault();
     doCORSRequest({ method: "GET", url: urlField },
       function printResult(result) {
-        var newstr = result;
-        newstr = [];
+        var from = result.search("marshlist");
+        var to = result.length;
+        var newstr = result.substring(from, to);
+        newstr = newstr.split('</table>')[0];
+        newstr = newstr.split("&nbsp </td><td class=\"minutes\">");
+        newstr = newstr.join();
+        newstr = newstr.substring(">", newstr.length);
+        newstr = newstr.split("</td><td>");
+        newstr = newstr.join();
+        newstr = newstr.split('&nbsp');
+        for (var i = 0; i < newstr.length; i++) {
+          newstr[i] = newstr[i].split('</a>')[0];
+        }
+        newstr = newstr.join();
+        newstr = newstr.split(', , ,');
+        for (var k = 0; k < newstr.length; k++) {
+          newstr[k] = newstr[k].split('hlist')[1];
+        }
+        if (newstr.length > 0) {
+          newstr.length--;
+        }
+        for (var t = 0; t < newstr.length; t++) {
+          newstr[t] = newstr[t].split('>')[1];
+          newstr[t] = newstr[t].replace(' ,  , ','');
+          newstr[t] = newstr[t].split(',');
+        }
         setMarshRes(newstr);
-        console.log(marshRes);
+        setIt(false);
+        setIt2(true);
+        console.log(newstr);
       }
     );
   }
@@ -91,10 +131,21 @@ function App() {
       <div className="content">
         <h3>{optVal}</h3>
         <ul>
-        {marshRes.map((v,i) => (
+        {it && marshRes.map((v,i) => (
           <li key={i} value={v.slice(0, v.indexOf(' '))} onClick={(e) => getInfo(e, v.slice(0, v.indexOf(' ')), v.slice(v.indexOf(' '), v.length))}>{v.slice(v.indexOf(' '), v.length)}</li>
         ))}
+        <table>
+        {it2 && (<tr className="table"><th>Маршрут</th><th>Ожидание</th><th>Следующая</th></tr>)}
+        {it2 && marshRes.map((v,i) => (
+          <tr key={i}>
+            <td>{v[0]}</td>
+            <td>{v[1]}</td>
+            <td>{v[2]}</td>
+          </tr>
+        ))}
+        </table>
         </ul>
+        {it2 && (<button onClick={(e) => getInfo(e, "", "", urlVal, optVal)}>Обновить</button>)}
       </div>
     </div>
   );
