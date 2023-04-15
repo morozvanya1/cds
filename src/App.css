@@ -49,6 +49,7 @@ background-color: #e6b333; */
   background: #e6b333;
 
   font-size: 16px;
+  cursor: pointer;
 }
 
 .App .content {
@@ -101,9 +102,11 @@ background-color: #e6b333; */
 
 .App .content button {
   padding: 5px 15px;
+  margin-bottom: 15px;
   color: white;
   border: none;
   border-radius: 5px;
   background: #e6b333;
   font-size: 16px;
+  cursor: pointer;
 }
