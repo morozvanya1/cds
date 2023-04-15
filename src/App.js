@@ -189,6 +189,7 @@ function App() {
         {it2 && (<button onClick={(e) => getInfo(e, "", "", urlVal, optVal)}>Обновить</button>)}
         {it3 && (<button onClick={() => setIt4(true)}>Назад</button>)}
       </div>
+      <a href="https://cors-anywhere.herokuapp.com/corsdemo" className="notWorking">Если не работает</a>
     </div>
   );
 }
