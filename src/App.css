@@ -123,3 +123,15 @@ background-color: #e6b333; */
   font-size: 16px;
   cursor: pointer;
 }
+
+.notWorking {
+  color: rgba(255, 255, 255, 0.1);
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.05);
+
+  width: 150px;
+  margin: 0 auto;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
