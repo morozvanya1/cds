@@ -78,4 +78,32 @@ background-color: #e6b333; */
   border-bottom: #e6b333 1px solid ;
 }
 
+.App table {
+  border-spacing: 0px !important;
+  padding-bottom: 20px;
+}
 
+.App .content th {
+  color: #e6b333;
+  padding: 5px 10px;
+  text-align: center;
+  border-bottom: #e6b333 1px solid;
+}
+
+.App .content td {
+  padding: 5px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 17px;
+
+  min-width: 33%;
+  text-align: center;
+}
+
+.App .content button {
+  padding: 5px 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background: #e6b333;
+  font-size: 16px;
+}
