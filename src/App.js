@@ -51,7 +51,7 @@ function App() {
         newstr = newstr.replaceAll(">", " ");
         newstr = newstr.split(",");
         setMarshRes(newstr);
-        setIt(true);
+        setIt(true); 
         setIt2(false);
         console.log(marshRes);
       }
