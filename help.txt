@@ -1,0 +1,28 @@
+// var vi = newstr;
+// console.clear();
+// console.log("\"" + mVal + "\" : [" + a.map((v) => {
+//   vi = "\"" + v  + "\"";
+//   return vi;
+// }) + "],");
+--Парсинг маршрутов
+// var urlField = "https://m.cdsvyatka.com/marsh_stops.php?marshlist=" + mVal;
+// var urlField = "http://localhost:8010/proxy/marsh_stops.php?marshlist=" + mVal;
+// console.log(urlField);
+// setOptVal("Остановки на маршруте - " + mHtml);
+// e.preventDefault();
+// doCORSRequest({ method: "GET", url: urlField },
+//   function printResult(result) {
+//     var from = result.search("busstop");
+//     var to = result.length;
+//     var newstr = result.substring(from, to);
+//     newstr = newstr.split('<div class="footer">')[0];
+//     newstr = newstr.split("</a><br><a href=prediction.php?");
+//     newstr = newstr.join();
+//     newstr = newstr.split("</a>")[0];
+//     newstr = newstr.split(",busstop=");
+//     newstr = newstr.join();
+//     newstr = newstr.split("busstop=")[1];
+//     newstr = newstr.replaceAll(">", " ");
+//     newstr = newstr.split(",");
+//     setMarshRes(newstr);
+//     setMarshBack(newstr)});
