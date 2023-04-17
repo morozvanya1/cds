@@ -37,7 +37,7 @@ background-color: #e6b333; */
 
 .App .content-header {
   color: rgba(255, 255, 255, 0.75);
-  padding: 10px 10px;
+  padding: 10px;
 
   display: flex;
   flex-direction: row;
@@ -51,6 +51,25 @@ background-color: #e6b333; */
 
 .App .content-header select {
   padding: 5px 10px;
+}
+
+#marshlist {
+  margin-left: 5px;
+  width: 140px;
+}
+
+.App .content-change {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+
+.App .content-change p {
+  padding-bottom: 5px;
+}
+
+#autolist {
+  width: 95%;
 }
 
 .App .content-header button {
