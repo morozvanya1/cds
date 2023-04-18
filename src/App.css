@@ -199,3 +199,5 @@ background-color: #e6b333; */
   padding: 5px 10px;
   border-radius: 5px;
 }
+
+select:invalid { color: black; }

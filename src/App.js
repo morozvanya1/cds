@@ -215,7 +215,7 @@ function App() {
       <div className="content-header">
         <p className="darkTheme1">Поиск по маршруту</p>
         <select name="marshlist" id="marshlist" onChange={() => transport()} defaultValue="">
-          <option></option>
+          <option value="" disabled selected hidden>Нажмите...</option>
           {autoDesc.map((v, i) => (
             <option key={i} value={autoVal[i]}>
               {v}
@@ -225,7 +225,7 @@ function App() {
       </div>
       {mVal && (<div className="content-change">
           <select name="autolist" id="autolist" onChange={(e) => getTS(e)} defaultValue="">
-            <option></option>
+            <option value="" disabled selected hidden>Выберите автобус...</option>
             {arr && arr.map((v,i) => {
               // console.log(v + " --- " + i + " --- " + arr.length);
               return (
