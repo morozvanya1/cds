@@ -91,6 +91,7 @@ background-color: #e6b333; */
   display: inline-block;
   font-size: 16px;
   color: rgb(26, 31, 37);
+  border: 1px solid rgb(26, 31, 37);
   height: 40px;
   width: 50%;
   background: rgba(255, 255, 255, 0.75);
