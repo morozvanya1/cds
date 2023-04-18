@@ -83,9 +83,10 @@ function App() {
 
   function onSetTS(e) {
     const select = document.getElementById("autolist").getElementsByTagName("option");
+    const inputText = document.getElementById("autolistMarsh");
     for (let i = 0; i < select.length; i++) {
-      if (select[i].selected) {
-        getInfo(e, select[i].value, select[i].innerHTML);
+      if (select[i].value === inputText.value) {
+        getInfo(e, select[i].getAttribute('name'), select[i].value);
       }
     }
   }
@@ -215,7 +216,7 @@ function App() {
       </header>
       <div className="content-header">
         <p className="darkTheme1">Поиск по маршруту</p>
-        <input type="text" list="marshlist" id="dataListMarsh" onChange={() => transport()}/>
+        <input type="text" list="marshlist" id="dataListMarsh" onChange={() => transport()} placeholder="Нажмите..."/>
         <datalist id="marshlist">
         {/* <select name="marshlist" id="marshlist" onChange={() => transport()} defaultValue=""> */}
           <option></option>
@@ -228,15 +229,18 @@ function App() {
         </datalist>
       </div>
       {mVal && (<div className="content-change">
-          <select name="autolist" id="autolist" onChange={(e) => getTS(e)} defaultValue="">
+        <input type="text" list="autolist" id="autolistMarsh" onChange={(e) => getTS(e)} placeholder="Нажмите..."/>
+          <datalist id="autolist">
+          {/* <select name="autolist" id="autolist" onChange={(e) => getTS(e)} defaultValue=""> */}
             <option></option>
             {arr && arr.map((v,i) => {
-              // console.log(v + " --- " + i + " --- " + arr.length);
+              console.log(v + " --- " + i + " --- " + arr.length);
               return (
-                <option key={i} value={v.slice(0, v.indexOf(' '))}>
-                  {v.slice(v.indexOf(' '), v.length)}
+                <option key={i} name={v.slice(0, v.indexOf(' '))} value={v.slice(v.indexOf(' '), v.length)}>
+                  {/* {v.slice(v.indexOf(' '), v.length)} */}
                 </option>)})}
-          </select>
+          {/* </select> */}
+          </datalist>
           {/* <button onClick={() => {document.getElementById('autolist').value = ""}}>Сбросить</button> */}
       </div>)}
       <div className="content">
