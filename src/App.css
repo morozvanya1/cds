@@ -10,6 +10,7 @@ background-color: #e6b333; */
 
   background: rgb(26, 31, 37);
   overflow-y: scroll;
+  transition: 1s ease;
 }
 
 .App header {
@@ -23,7 +24,11 @@ background-color: #e6b333; */
   justify-content: space-between;
   align-items: center;
 
-  padding: 10px 30px 10px 20px;
+  padding: 10px 20px;
+}
+
+.App header h1 {
+  padding-left: 20px;
 }
 
 .App header img {
@@ -32,7 +37,33 @@ background-color: #e6b333; */
 }
 
 #darkTheme {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  
   cursor: pointer;
+  background: rgba(26, 31, 37, 0.25);
+  border-radius: 50px;
+  position: relative;
+}
+
+#sun {
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  /*background: rgba(255, 255, 255);
+  border-radius: 50px; */
+  transition: 1s ease;
+}
+
+#dark {
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  /* background: rgba(26, 31, 37);
+  border-radius: 50px; */
+  transition: 1s ease;
 }
 
 .App .content-header {
@@ -42,6 +73,7 @@ background-color: #e6b333; */
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
 .App .content-header p {
@@ -53,28 +85,33 @@ background-color: #e6b333; */
   padding: 5px 10px;
 }
 
-#marshlist {
-  margin-left: 5px;
-  width: 140px;
+#marshlist, #autolist {
+  -webkit-appearance: none;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  color: rgb(26, 31, 37);
+  height: 40px;
+  width: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  -moz-transition: all 0.5 ease-in;
+  -o-transition: all 0.5 ease-in;
+  -webkit-transition: all 0.5 ease-in;
+  transition: all 0.5 ease-in;
+  padding: 5px 20px;
+  border-radius: 50px;
 }
 
 .App .content-change {
-  text-align: center;
-  justify-content: center;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px;
 }
 
-.App .content-change p {
-  padding-bottom: 5px;
-}
-
-#autolist {
-  width: 95%;
-}
-
-.App .content-header button {
-  padding: 5px 15px;
-  margin-left: 15px;
+.App .content-change button {
   color: white;
   border: none;
   border-radius: 5px;
@@ -82,6 +119,14 @@ background-color: #e6b333; */
 
   font-size: 16px;
   cursor: pointer;
+
+  padding: 5px 15px;
+  margin-left: 10px;
+  height: 40px;
+}
+
+#autolist {
+  width: 95%;
 }
 
 .App .content {
@@ -144,11 +189,10 @@ background-color: #e6b333; */
 }
 
 .notWorking {
-  color: rgba(255, 255, 255, 0.1);
   text-align: center;
   text-decoration: none;
-  background-color: rgba(255, 255, 255, 0.05);
-
+  background-color: #e6b333;
+  color: rgba(255, 255, 255);
   width: 150px;
   margin: 0 auto;
   padding: 5px 10px;
