@@ -225,7 +225,7 @@ function App() {
       </div>
       {mVal && (<div className="content-change">
           <select name="autolist" id="autolist" onChange={(e) => getTS(e)} defaultValue="">
-            <option value="" disabled selected hidden>Выберите автобус...</option>
+            <option value="" disabled selected hidden>Выберите остановку...</option>
             {arr && arr.map((v,i) => {
               // console.log(v + " --- " + i + " --- " + arr.length);
               return (
