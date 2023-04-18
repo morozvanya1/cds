@@ -66,11 +66,12 @@ function App() {
 
   const onSetMarsh = () => {
     const select = document.getElementById("marshlist").getElementsByTagName("option");
-
+    const inputText = document.getElementById("dataListMarsh");
     for (let i = 0; i < select.length; i++) {
-      if (select[i].selected) {
-        setMVal(select[i].value);
-        setArr(au[select[i].value]);
+      console.log(select[i].getAttribute('name'));
+      if (select[i].value === inputText.value) {
+        setMVal(select[i].getAttribute('name'));
+        setArr(au[select[i].getAttribute('name')]);
       }
     }
     const autoSelect = document.getElementById("autolist");
@@ -214,14 +215,17 @@ function App() {
       </header>
       <div className="content-header">
         <p className="darkTheme1">Поиск по маршруту</p>
-        <select name="marshlist" id="marshlist" onChange={() => transport()} defaultValue="">
+        <input type="text" list="marshlist" id="dataListMarsh" onChange={() => transport()}/>
+        <datalist id="marshlist">
+        {/* <select name="marshlist" id="marshlist" onChange={() => transport()} defaultValue=""> */}
           <option></option>
           {autoDesc.map((v, i) => (
-            <option key={i} value={autoVal[i]}>
-              {v}
+            <option key={i} value={v} name={autoVal[i]}>
+              {/* {autoVal[i]} */}
             </option>
           ))}
-        </select>
+        {/* </select> */}
+        </datalist>
       </div>
       {mVal && (<div className="content-change">
           <select name="autolist" id="autolist" onChange={(e) => getTS(e)} defaultValue="">
