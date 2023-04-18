@@ -66,12 +66,11 @@ function App() {
 
   const onSetMarsh = () => {
     const select = document.getElementById("marshlist").getElementsByTagName("option");
-    const inputText = document.getElementById("dataListMarsh");
+
     for (let i = 0; i < select.length; i++) {
-      console.log(select[i].getAttribute('name'));
-      if (select[i].value === inputText.value) {
-        setMVal(select[i].getAttribute('name'));
-        setArr(au[select[i].getAttribute('name')]);
+      if (select[i].selected) {
+        setMVal(select[i].value);
+        setArr(au[select[i].value]);
       }
     }
     const autoSelect = document.getElementById("autolist");
@@ -83,10 +82,9 @@ function App() {
 
   function onSetTS(e) {
     const select = document.getElementById("autolist").getElementsByTagName("option");
-    const inputText = document.getElementById("autolistMarsh");
     for (let i = 0; i < select.length; i++) {
-      if (select[i].value === inputText.value) {
-        getInfo(e, select[i].getAttribute('name'), select[i].value);
+      if (select[i].selected) {
+        getInfo(e, select[i].value, select[i].innerHTML);
       }
     }
   }
@@ -216,31 +214,25 @@ function App() {
       </header>
       <div className="content-header">
         <p className="darkTheme1">Поиск по маршруту</p>
-        <input type="text" list="marshlist" id="dataListMarsh" onChange={() => transport()} placeholder="Нажмите..."/>
-        <datalist id="marshlist">
-        {/* <select name="marshlist" id="marshlist" onChange={() => transport()} defaultValue=""> */}
-          <option></option>
+        <select name="marshlist" id="marshlist" onChange={() => transport()} defaultValue="">
+          <option value="" disabled selected hidden>Нажмите...</option>
           {autoDesc.map((v, i) => (
-            <option key={i} value={v} name={autoVal[i]}>
-              {/* {autoVal[i]} */}
+            <option key={i} value={autoVal[i]}>
+              {v}
             </option>
           ))}
-        {/* </select> */}
-        </datalist>
+        </select>
       </div>
       {mVal && (<div className="content-change">
-        <input type="text" list="autolist" id="autolistMarsh" onChange={(e) => getTS(e)} placeholder="Нажмите..."/>
-          <datalist id="autolist">
-          {/* <select name="autolist" id="autolist" onChange={(e) => getTS(e)} defaultValue=""> */}
-            <option></option>
+          <select name="autolist" id="autolist" onChange={(e) => getTS(e)} defaultValue="">
+            <option value="" disabled selected hidden>Выберите автобус...</option>
             {arr && arr.map((v,i) => {
-              console.log(v + " --- " + i + " --- " + arr.length);
+              // console.log(v + " --- " + i + " --- " + arr.length);
               return (
-                <option key={i} name={v.slice(0, v.indexOf(' '))} value={v.slice(v.indexOf(' '), v.length)}>
-                  {/* {v.slice(v.indexOf(' '), v.length)} */}
+                <option key={i} value={v.slice(0, v.indexOf(' '))}>
+                  {v.slice(v.indexOf(' '), v.length)}
                 </option>)})}
-          {/* </select> */}
-          </datalist>
+          </select>
           {/* <button onClick={() => {document.getElementById('autolist').value = ""}}>Сбросить</button> */}
       </div>)}
       <div className="content">
