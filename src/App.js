@@ -2,7 +2,7 @@ import "./App.css";
 import React from "react";
 import {default as logo} from "./front-of-bus.png";
 import {default as sun} from "./sun-bright.png";
-// import {default as dark} from "./moon.png";
+import {default as dark} from "./moon.png";
 
 function App() {
   const autoVal = ["1001", "1002", "1003", "1005", "1008", "1009", "1010", "1011", "1012", "1014", "1015", "1016", "1019", "1020", "1021", "1022", "1023", "1026", "1033", "1038", "1039", "1044", "1046", "1047", "1050", "1051", "1052", "1053", "1054", "1061", "1067", "1070", "1074", "1084", "1087", "1090", "2046", "2053", "3101", "3104", "3106", "3107", "3108", "3109", "3112", "3115", "3116", "3117", "3121", "3125", "3127", "3129", "3130", "3133", "3136", "3138", "3143", "3146", "3147", "3148", "3154", "3155", "3158", "3160", "3168", "50010", "50030", "50040", "50050", "50070", "50080"];
@@ -13,13 +13,8 @@ function App() {
   const [view, setView] = React.useState(false);
   const [urlVal, setUrlVal] = React.useState("");
   const [au, setAu] = React.useState(0);
-  var [arr, setArr] = React.useState([]);
-  var [revArr, setRevArr] = React.useState(true);
-  var [marsh, setMarsh] = React.useState([]);
-  var tempMin;
-  var tempVal;
-  var newMass = [];
-  const [load, setLoad] = React.useState(false);
+  const [arr, setArr] = React.useState([]);
+  const [bool, setBool] = React.useState(true);
   var cors_api_url = "https://cors-anywhere.herokuapp.com/";
   // const [back, setBack] = React.useState(false);
 
@@ -32,40 +27,57 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    setLoad(true);
-  }, [marsh]);
+    const v = document.getElementById("darkTheme").src;
+    if (v === sun) {
+      document.querySelector(".App").style.background = "rgb(26, 31, 37)";
+      document.querySelector(".darkTheme1").style.color = "rgba(255, 255, 255, 0.75)";
+      document.querySelector(".content").style.borderTop = "1px solid rgba(255, 255, 255, 0.1)";
+      if (document.querySelector(".darkTheme2") !== null && document.querySelectorAll('.darkTheme3') !== null) {
+        document.querySelector(".darkTheme2").style.color = "rgba(255, 255, 255, 1)";
+        document.querySelectorAll('.darkTheme3').forEach(function(elem){
+          elem.style.color = "rgba(255, 255, 255, 0.75)";
+        })
+      }
+      document.getElementById("dark").style.background = "rgba(26, 31, 37)";
+      document.getElementById("dark").style.borderRadius = "50px";
+      document.getElementById("sun").style.background = "none";
+      document.getElementById("sun").style.borderRadius = "none";
+      document.querySelector(".notWorking").style.color = "rgba(255, 255, 255, 0.1)";
+      document.querySelector(".notWorking").style.backgroundColor = "rgba(255, 255, 255, 0.05)";
+    } else {
+      document.querySelector(".App").style.background = "white";
+      document.querySelector(".darkTheme1").style.color = "rgb(26, 31, 37)";
+      document.querySelector(".content").style.borderTop = "1px solid rgba(0, 0, 0, 0.1)";
+      if (document.querySelector(".darkTheme2") !== null && document.querySelectorAll('.darkTheme3') !== null) {
+        document.querySelector(".darkTheme2").style.color = "rgb(26, 31, 37)";
+        document.querySelectorAll(".darkTheme3").forEach(function(elem){
+          elem.style.color = "rgb(26, 31, 37)";
+        })
+      }
+      document.getElementById("sun").style.background = "rgba(255, 255, 255)";
+      document.getElementById("sun").style.borderRadius = "50px";
+      document.getElementById("dark").style.background = "none";
+      document.getElementById("dark").style.borderRadius = "none";
+      document.querySelector(".notWorking").style.color = "rgba(255, 255, 255)";
+      document.querySelector(".notWorking").style.backgroundColor = "#e6b333";
+      document.querySelector(".notWorking").style.opacity = "0.5";
+    }
+  }, [view]);
 
   const onSetMarsh = () => {
     const select = document.getElementById("marshlist").getElementsByTagName("option");
+
     for (let i = 0; i < select.length; i++) {
       if (select[i].selected) {
-        var newArr = au[select[i].value];
         setMVal(select[i].value);
         setArr(au[select[i].value]);
-        if (newArr !== undefined) {
-          for (let k = 0; k < newArr.length; k++) {
-            onSetTSAll(newArr[k].slice(0, newArr[k].indexOf(' ')), select[i].innerHTML, k);
-          }
-        }
       }
     }
     const autoSelect = document.getElementById("autolist");
     if (autoSelect !== null) {
       autoSelect.value = "";
       setView(false);
-      document.getElementById('changeRoute').innerHTML = "Обратно";
     }
-  }
-
-  const onSetTSAll = (v, text, index) => {
-    if (text !== "" || text !== undefined) {
-      if (text.slice(0, text.indexOf(' ')) === 'Авт') {
-        text = text.slice(text.indexOf(' ') + 1, text.length);
-      } else {
-        text = text.slice(text.indexOf(' ') + 2, text.length);
-      }
-    }
-    // getInfo('pushMarsh', v, text, undefined, undefined, index);
   }
 
   function onSetTS(e) {
@@ -75,10 +87,6 @@ function App() {
         getInfo(e, select[i].value, select[i].innerHTML);
       }
     }
-  }
-
-  const onRevArr = () => {
-    setRevArr(!revArr);
   }
 
   function doCORSRequest(options, printResult) {
@@ -93,23 +101,13 @@ function App() {
     onSetMarsh();
     // console.log(arr);
   }
-  
-  const reverseArr = () => {
-    onRevArr();
-    const v = document.getElementById('changeRoute').innerHTML;
-    if (v === "Обратно") {
-      document.getElementById('changeRoute').innerHTML = "Туда";
-    } else {
-      document.getElementById('changeRoute').innerHTML = "Обратно";
-    }
-    console.log(marsh);
-  }
 
   function getTS(e) {
     onSetTS(e);
+    document.getElementById('autolist').value = "";
   }
 
-  function getInfo(e, val, desc, url, descVal, index) {
+  function getInfo(e, val, desc, url, descVal) {
     console.log("getInfo");
     var urlField = "https://m.cdsvyatka.com/prediction.php?busstop=" + val;
     // var urlField;
@@ -119,13 +117,12 @@ function App() {
       // urlField = "http://localhost:8010/proxy/prediction.php?busstop=" + val;
       setUrlVal(urlField);
     }
-    // console.log(urlField);
     if (descVal !== undefined) {
       setOptVal(descVal);
     } else {
       setOptVal("Остановка: " + desc);
     }
-    // e.preventDefault();
+    e.preventDefault();
     doCORSRequest({ method: "GET", url: urlField },
       function printResult(result) {
         var from = result.search("marshlist");
@@ -154,46 +151,55 @@ function App() {
           newstr[t] = newstr[t].replace(' ,  , ','');
           newstr[t] = newstr[t].split(',');
         }
-        // console.log(newstr);
-        if (e === 'pushMarsh') {
-          for (let d = 0; d < newstr.length; d++) {
-            tempVal = newstr[d][0].slice(0, newstr[d][0].indexOf(' '));
-            tempMin = newstr[d][1];
-            if (tempVal === desc) {
-              // console.log(tempVal + " " + index + "-> " + tempMin);
-              newMass[index] = tempMin;
-            }
-          }
-          setMarsh(newMass);
-        } else {
-          setMarshRes(newstr);
-          setView(true);
+        console.log(newstr);
+        if (newstr === []) {
+          console.log('111' + newstr);
+          setBool(false);
         }
+        setMarshRes(newstr);
+        setView(true);
       }
     );
   }
 
   function changeTheme() {
-    // const v = document.getElementById("darkTheme").src;
-    // if (v === sun) {
-    //   document.getElementById("darkTheme").src = dark;
-    //   document.querySelector(".App").style.background = "white";
-    //   document.querySelector(".darkTheme1").style.color = "rgb(26, 31, 37)";
-    //   document.querySelector(".content").style.borderTop = "1px solid rgba(0, 0, 0, 0.1)";
-    //   document.querySelector(".darkTheme2").style.color = "rgb(26, 31, 37)";
-    //   document.querySelectorAll(".darkTheme3").forEach(function(elem){
-    //     elem.style.color = "rgb(26, 31, 37)";
-    //   })
-    // } else {
-    //   document.getElementById("darkTheme").src = sun;
-    //   document.querySelector(".App").style.background = "rgb(26, 31, 37)";
-    //   document.querySelector(".darkTheme1").style.color = "rgba(255, 255, 255, 0.75)";
-    //   document.querySelector(".content").style.borderTop = "1px solid rgba(255, 255, 255, 0.1)";
-    //   document.querySelector(".darkTheme2").style.color = "rgba(255, 255, 255, 1)";
-    //   document.querySelectorAll('.darkTheme3').forEach(function(elem){
-    //     elem.style.color = "rgba(255, 255, 255, 0.75)";
-    //   })
-    // }
+    const v = document.getElementById("darkTheme").src;
+    if (v === sun) {
+      document.querySelector(".App").style.background = "white";
+      document.getElementById("darkTheme").src = dark;
+      document.querySelector(".darkTheme1").style.color = "rgb(26, 31, 37)";
+      document.querySelector(".content").style.borderTop = "1px solid rgba(0, 0, 0, 0.1)";
+      if (document.querySelector(".darkTheme2") !== null && document.querySelectorAll('.darkTheme3') !== null) {
+        document.querySelector(".darkTheme2").style.color = "rgb(26, 31, 37)";
+        document.querySelectorAll(".darkTheme3").forEach(function(elem){
+          elem.style.color = "rgb(26, 31, 37)";
+        })
+      }
+      document.getElementById("sun").style.background = "rgba(255, 255, 255)";
+      document.getElementById("sun").style.borderRadius = "50px";
+      document.getElementById("dark").style.background = "none";
+      document.getElementById("dark").style.borderRadius = "none";
+      document.querySelector(".notWorking").style.color = "rgba(255, 255, 255)";
+      document.querySelector(".notWorking").style.backgroundColor = "#e6b333";
+      document.querySelector(".notWorking").style.opacity = "0.5";
+    } else {
+      document.querySelector(".App").style.background = "rgb(26, 31, 37)";
+      document.getElementById("darkTheme").src = sun;
+      document.querySelector(".darkTheme1").style.color = "rgba(255, 255, 255, 0.75)";
+      document.querySelector(".content").style.borderTop = "1px solid rgba(255, 255, 255, 0.1)";
+      if (document.querySelector(".darkTheme2") !== null && document.querySelectorAll('.darkTheme3') !== null) {
+        document.querySelector(".darkTheme2").style.color = "rgba(255, 255, 255, 1)";
+        document.querySelectorAll('.darkTheme3').forEach(function(elem){
+          elem.style.color = "rgba(255, 255, 255, 0.75)";
+        })
+      }
+      document.getElementById("dark").style.background = "rgba(26, 31, 37)";
+      document.getElementById("dark").style.borderRadius = "50px";
+      document.getElementById("sun").style.background = "none";
+      document.getElementById("sun").style.borderRadius = "none";
+      document.querySelector(".notWorking").style.color = "rgba(255, 255, 255, 0.1)";
+      document.querySelector(".notWorking").style.backgroundColor = "rgba(255, 255, 255, 0.05)";
+    }
   }
 
   return (
@@ -201,7 +207,10 @@ function App() {
       <header>
         <img src={logo} alt="logo"/>
         <h1>ЦДС Вятка</h1>
-        <img src={sun} alt="logo" id="darkTheme" onClick={() => changeTheme()}/>
+        <div id="darkTheme">
+          <img src={sun} alt="logo" id="sun" onClick={() => changeTheme()}/>
+          <img src={dark} alt="logo" id="dark" onClick={() => changeTheme()}/>
+        </div>
       </header>
       <div className="content-header">
         <p className="darkTheme1">Поиск по маршруту</p>
@@ -214,30 +223,23 @@ function App() {
           ))}
         </select>
       </div>
-      {load && mVal && (<div className="content-header">
-        <div className="content-change">
+      {mVal && (<div className="content-change">
           <select name="autolist" id="autolist" onChange={(e) => getTS(e)} defaultValue="">
             <option></option>
-            {load && arr && revArr && arr.map((v,i) => {
+            {arr && arr.map((v,i) => {
               // console.log(v + " --- " + i + " --- " + arr.length);
-              // console.log(marsh);
               return (
                 <option key={i} value={v.slice(0, v.indexOf(' '))}>
                   {v.slice(v.indexOf(' '), v.length)}
                 </option>)})}
-            {load && arr && !revArr && Array.from(arr).reverse().map((v,i) => {
-              return (
-                <option key={i} value={autoVal[i]}>
-                  {v.slice(v.indexOf(' '), v.length)}
-                </option>)})}
           </select>
-          <button onClick={() => reverseArr()} id="changeRoute">Обратно</button>
-        </div>
+          {/* <button onClick={() => {document.getElementById('autolist').value = ""}}>Сбросить</button> */}
       </div>)}
       <div className="content">
         {view && <h3 className="darkTheme2">{optVal}</h3>}
         <table>
-        {view && (<tr className="table"><th>Маршрут</th><th>Ожидание</th><th>Следующая</th></tr>)}
+        {view && (<tr className="table"><th>Маршрут</th><th>Ожидание</th><th>Конечная</th></tr>)}
+        {!bool && <div className="darkTheme3">Данные не найдены, попробуйте обновить</div>}
         {view && marshRes.map((v,i) => (
           <tr key={i}>
             <td className="darkTheme3">{v[0]}</td>
