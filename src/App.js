@@ -25,11 +25,7 @@ function App() {
     );
   }, []);
 
-  React.useEffect(() => {
-    setDarkTheme();
-  }, [needChange, marshRes, bool]);
-
-  function setDarkTheme() {
+  const setDarkTheme = React.useCallback(() => {
     if (!needChange) {
       document.querySelector(".App").style.background = "rgb(26, 31, 37)";
       document.querySelector(".darkTheme1").style.color = "rgba(255, 255, 255, 0.75)";
@@ -70,7 +66,11 @@ function App() {
       document.querySelector(".notWorking").style.backgroundColor = "#e6b333";
       document.querySelector(".notWorking").style.opacity = "0.5";
     }
-  }
+  }, [needChange]);
+
+  React.useEffect(() => {
+    setDarkTheme();
+  }, [setDarkTheme, needChange, marshRes, bool, ers]);
 
   const onSetMarsh = () => {
     const select = document.getElementById("marshlist").getElementsByTagName("option");
