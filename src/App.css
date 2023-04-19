@@ -201,3 +201,8 @@ background-color: #e6b333; */
 }
 
 select:invalid { color: black; }
+
+.darkTheme4 {
+  text-align: center;
+  padding: 5px 0;
+}
